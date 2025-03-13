@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced DICOM ZIP Viewer</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- JSZip library for handling ZIP files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced DICOM ZIP Viewer</h1>
+
+        <div id="controls">
+            <label for="zipFileInput" class="file-input-label">Open DICOM ZIP / DCM</label>
+            <input type="file" id="zipFileInput" accept=".zip,.dcm,application/dicom">
+        </div>
+
+        <div id="status">Please select a DICOM file or ZIP file to begin.</div>
+
+        <div class="content-area">
+            <div class="file-tree" id="fileTree">
+                <div>No files loaded</div>
+            </div>
+
+            <div class="viewer-area">
+                <div class="viewer-controls">
+                    <div class="control-group">
+                        <button id="zoomInButton" title="Zoom In">🔍+</button>
+                        <button id="zoomOutButton" title="Zoom Out">🔍-</button>
+                        <button id="bestFitButton" title="Best Fit">Best Fit</button>
+                    </div>
+
+                    <div class="control-group slider-group">
+                        <div class="slider-control">
+                            <label>☀️</label>
+                            <input type="range" id="brightnessSlider" min="-100" max="100" value="0" class="compact-slider">
+                        </div>
+                        <div class="slider-control">
+                            <label>◐</label>
+                            <input type="range" id="contrastSlider" min="-100" max="100" value="0" class="compact-slider">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <button id="invertButton" title="Invert Colors">Invert</button>
+                        <button id="resetViewButton" title="Reset Brightness & Contrast">Reset ☀️/◐</button>
+                        <button id="downloadButton" title="Download Image">💾</button>
+                    </div>
+                </div>
+
+                <div class="image-container" id="imageContainer">
+                    <canvas id="dicomCanvas" width="512" height="512"></canvas>
+                </div>
+
+                <!-- Patient Info Summary -->
+                <div class="patient-info" id="patientInfo">
+                    <h3>Patient Information</h3>
+                    <div id="patientInfoContent">No patient information available</div>
+                </div>
+
+                <!-- Tabs for Metadata, DICOMDIR and Documents -->
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <div class="tab-button active" data-tab="metadata-tab">Metadata</div>
+                        <div class="tab-button" data-tab="dicomdir-tab">DICOMDIR</div>
+                        <div class="tab-button" data-tab="documents-tab">Embedded Documents</div>
+                    </div>
+
+                    <div class="tab-content active" id="metadata-tab">
+                        <div id="metadata">No metadata available</div>
+                    </div>
+
+                    <div class="tab-content" id="dicomdir-tab">
+                        <div id="dicomdirContent">
+                            <p>No DICOMDIR information available for this dataset.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="documents-tab">
+                        <div id="documents">
+                            <p>No embedded documents found in this DICOM file.</p>
+                            <ul class="document-list" id="documentList"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Module Scripts - Load in correct dependency order -->
+    <script src="dicom-parser.js"></script>
+    <script src="document-type-detector.js"></script>
+    <script src="document-handler.js"></script>
+    <script src="image-processor.js"></script>
+    <script src="file-manager.js"></script>
+    <script src="dicomdir-parser.js"></script>
+    <script src="metadata-organizer.js"></script>
+
+    <!-- Comparison View (split into 5 parts) -->
+    <script src="comparison-view-part1.js"></script>
+    <script src="comparison-view-part2.js"></script>
+    <script src="comparison-view-part3.js"></script>
+    <script src="comparison-view-part4.js"></script>
+    <script src="comparison-view-part5.js"></script>
+
+    <script src="series-navigator.js"></script>
+    <script src="ui-controller-part1.js"></script>
+    <script src="ui-controller-part2.js"></script>
+    <script src="ui-controller-part3.js"></script>
+    <script src="ui-controller-part4.js"></script>
+
+    <!-- Initialization Script -->
+    <script>
+        // Improved debug logging
+        function debugLog(message, data) {
+            console.log(`%c[DEBUG] ${message}`, 'color: blue; font-weight: bold;', data || '');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            debugLog('DOM loaded, initializing application');
+
+            // Create comparison view first so it's available when needed
+            window.comparisonView = new ComparisonView();
+            debugLog('Comparison view initialized');
+
+            // Initialize the viewer components
+            const viewer = new DicomViewer();
+            window.viewer = viewer; // Make viewer available globally
+
+            // Initialize viewer which will handle setting up comparison view
+            viewer.initialize();
+            debugLog('Viewer initialized');
+
+            // No hanging protocol functionality needed
+
+            // Monitor file tree clicks
+            document.getElementById('fileTree').addEventListener('click', function(e) {
+                if (e.target && e.target.getAttribute('data-path')) {
+                    const path = e.target.getAttribute('data-path');
+                    debugLog('File tree item clicked:', path);
+                    
+                    // Give the file manager time to update the selected path
+                    setTimeout(() => {
+                        // Check if fileManager has the selected path
+                        if (window.viewer && window.viewer.fileManager) {
+                            const selectedPath = window.viewer.fileManager.getSelectedFilePath();
+                            debugLog('Currently selected path:', selectedPath);
+                        }
+                    }, 150);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

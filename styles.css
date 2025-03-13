@@ -1,0 +1,1144 @@
+/* Main layout styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+.content-area {
+    display: flex;
+    gap: 20px;
+}
+
+/* Compact header */
+h1 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* File tree styles */
+.file-tree {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 5px;
+    min-width: 250px;
+    max-width: 350px;
+    overflow-y: auto;
+    display: none; /* Hide by default */
+}
+
+.file-tree.visible {
+    display: block; /* Show when visible class is added */
+}
+
+.tree-item {
+    margin: 2px 0;
+    cursor: pointer;
+    padding: 2px 3px;
+    font-size: 0.9em;
+}
+.tree-folder {
+    font-weight: bold;
+}
+.tree-folder:before {
+    content: '📁 ';
+}
+.tree-file:before {
+    content: '📄 ';
+}
+.tree-item.selected {
+    background-color: #e0e0ff;
+}
+.tree-children {
+    margin-left: 20px;
+}
+.tree-file.image-file:before {
+    content: '🖼️ ' !important;
+}
+.tree-file[draggable=true]:hover {
+    background-color: #f0f7ff;
+    cursor: grab;
+}
+
+/* Add this to your styles.css file to ensure image icons appear correctly */
+
+.tree-file:before {
+    content: '📄 ';
+}
+
+.tree-file.image-file:before {
+    content: '🖼️ ' !important;
+}
+
+/* Make sure the style is strong enough to override any other styles */
+.tree-item.tree-file.image-file:before {
+    content: '🖼️ ' !important;
+}
+
+/* Viewer area styles */
+.viewer-area {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+#controls {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+button, input {
+    padding: 8px 12px;
+    margin-right: 10px;
+}
+#status {
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.processing {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Image viewer styles */
+.image-container {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: black;
+    margin-bottom: 10px;
+    height: 600px;
+    display: none; /* Initially hidden, comparison view is shown instead */
+}
+#dicomCanvas {
+    position: absolute;
+    transform-origin: 0 0;
+}
+#metadata {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    height: 200px;
+    overflow-y: auto;
+}
+#downloadLink {
+    margin-top: 10px;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Viewer controls styles */
+.viewer-controls {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.control-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+}
+.control-group label {
+    margin-right: 5px;
+}
+.zoom-info {
+    margin-left: auto;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Make sliders more compact and show side by side */
+.slider-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.slider-control {
+    display: flex;
+    align-items: center;
+    min-width: 150px;
+}
+
+.slider-control label {
+    margin-right: 5px;
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+
+.compact-slider {
+    width: 100px; /* More compact slider */
+    margin: 0;
+}
+
+/* Tab styling */
+.tab-container {
+    margin-top: 10px;
+}
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.9em;
+}
+.tab-button {
+    padding: 5px 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.tab-button.active {
+    background-color: white;
+    border-bottom: 1px solid white;
+    margin-bottom: -1px;
+}
+.tab-content {
+    display: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.tab-content.active {
+    display: block;
+}
+
+/* Document list styling */
+.document-list {
+    list-style: none;
+    padding: 0;
+}
+.document-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+.document-item:hover {
+    background-color: #f5f5f5;
+}
+.document-info {
+    flex: 1;
+}
+.document-actions {
+    display: flex;
+    gap: 5px;
+}
+
+/* Metadata table styling */
+.metadata-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+.metadata-table th, .metadata-table td {
+    padding: 4px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.metadata-table th {
+    background-color: #f2f2f2;
+}
+.metadata-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.metadata-table tr:hover {
+    background-color: #f0f7ff;
+}
+
+/* Patient info styling */
+.patient-info {
+    background-color: #f0f7ff;
+    border: 1px solid #d0e3ff;
+    border-radius: 4px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+.patient-info h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #0056b3;
+    font-size: 1.1em;
+}
+.patient-info table {
+    width: 100%;
+}/* DICOMDIR structure display styles */
+.dicomdir-structure {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.dicomdir-patient {
+    border: 1px solid #b8daff;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    background-color: #f0f7ff;
+}
+
+.dicomdir-study {
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    margin: 8px;
+    background-color: #f8fff8;
+}
+
+.dicomdir-series {
+    border: 1px solid #d6d8db;
+    border-radius: 4px;
+    margin: 8px;
+    padding-bottom: 8px;
+    background-color: #f8f9fa;
+}
+
+.dicomdir-header {
+    padding: 8px;
+    font-weight: bold;
+    background-color: rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+}
+
+.dicomdir-info {
+    padding: 8px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.dicomdir-image-count {
+    padding: 0 8px;
+    color: #666;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+.icon {
+    margin-right: 5px;
+}
+
+/* File path info display */
+.dicom-file-info {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.dicom-file-info h4 {
+    margin: 5px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.dicom-file-info table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dicom-file-info td {
+    padding: 3px;
+}
+
+.dicom-file-info td:first-child {
+    font-weight: bold;
+    width: 30%;
+}
+
+/* Metadata organization styles */
+.metadata-tabs {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.metadata-tab-buttons {
+    display: flex;
+    overflow-x: auto;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+}
+
+.metadata-tab-button {
+    padding: 8px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+    color: #555;
+}
+
+.metadata-tab-button:hover {
+    background-color: #e9e9e9;
+}
+
+.metadata-tab-button.active {
+    background-color: #fff;
+    color: #0056b3;
+    border-bottom: 2px solid #0056b3;
+}
+
+.metadata-tab-button .icon {
+    margin-right: 5px;
+}
+
+.metadata-tab-contents {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.metadata-tab-content {
+    display: none;
+    padding: 10px;
+}
+
+.metadata-tab-content.active {
+    display: block;
+}
+
+/* Body part info display */
+.body-part-info {
+    display: flex;
+    align-items: center;
+    background-color: #f0f7ff;
+    border: 1px solid #d0e3ff;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.body-part-icon {
+    font-size: 32px;
+    margin-right: 15px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.body-part-details {
+    flex: 1;
+}
+
+.body-part-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.body-part-description {
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Media type badge */
+.media-type-badge {
+    display: inline-block;
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+/* Enhanced metadata table */
+.metadata-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.metadata-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.metadata-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    word-break: break-word;
+}
+
+.metadata-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.metadata-table tr:hover {
+    background-color: #f0f7ff;
+}
+
+/* Field value formatting */
+.field-date {
+    font-family: monospace;
+}
+
+.field-uid {
+    font-family: monospace;
+    font-size: 12px;
+}
+
+/* Animation for metadata tabs */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.metadata-tab-content.active {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Improve hanging protocol apply button */
+#apply-protocol {
+    padding: 4px 8px;
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+#apply-protocol::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.5s;
+}
+
+#apply-protocol:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+}
+
+/* Hanging protocol styles */
+.hanging-protocols {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.protocol-selector {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.protocol-selector label {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 5px;
+}
+
+.protocol-selector select {
+    padding: 4px 8px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    min-width: 150px;
+}
+
+.protocol-description {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 3px;
+}
+
+/* Comparison view styles */
+.comparison-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.comparison-toolbar {
+    display: flex;
+    background-color: #f5f5f5;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    position: relative;
+    z-index: 5;
+}
+
+.layout-selector {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.layout-selector span {
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.layout-selector button {
+    padding: 4px 8px;
+    margin-right: 4px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.layout-selector button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #0062cc;
+}
+
+.sync-options {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    gap: 10px;
+}
+
+.comparison-actions {
+    margin-left: auto;
+}
+
+.comparison-actions button {
+    padding: 4px 8px;
+    font-size: 0.9em;
+}
+
+/* Selection options in comparison view */
+.selection-options {
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.selection-options button {
+    padding: 4px 8px;
+    font-size: 0.9em;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+}
+
+.viewport-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 4px;
+    background-color: #333;
+    height: 600px;
+}
+
+.viewport {
+    background-color: #222;
+    border: 1px solid #444;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.viewport:hover {
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.viewport.selected {
+    box-shadow: 0 0 0 2px #007bff, 0 0 10px rgba(0, 123, 255, 0.6);
+    z-index: 1;
+}
+
+.viewport-drop-zone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #007bff;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #007bff;
+    z-index: 5;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.viewport-drop-zone.dragover {
+    background-color: rgba(0, 123, 255, 0.2);
+    border-color: #0056b3;
+}
+
+.drop-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.drop-text {
+    font-size: 14px;
+    text-align: center;
+    max-width: 80%;
+}
+
+.viewport-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: grab;
+}
+
+.viewport-canvas-container:active {
+    cursor: grabbing;
+}
+
+.viewport-canvas-container.dragover {
+    box-shadow: inset 0 0 0 3px #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.viewport-canvas {
+    position: absolute;
+    transform-origin: 0 0;
+    transition: filter 0.2s ease;
+}
+
+.viewport-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px;
+    font-size: 12px;
+    z-index: 4;
+}
+
+.viewport-patient {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.viewport-bodypart {
+    opacity: 0.8;
+    font-size: 12px;
+}
+
+.viewport-toolbar {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 5px;
+    z-index: 6;
+}
+
+.viewport-toolbar button {
+    padding: 3px 6px;
+    font-size: 12px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 1px solid #666;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.viewport-toolbar button:hover {
+    background-color: rgba(50, 50, 50, 0.9);
+}
+
+/* Series navigator styles */
+.series-navigator {
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.navigator-toolbar {
+    display: flex;
+    background-color: #f5f5f5;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+}
+
+#image-counter {
+    margin: 0 10px;
+    font-size: 14px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.navigator-spacer {
+    flex: 1;
+}
+
+.filmstrip-container {
+    height: 80px;
+    overflow: hidden;
+    border-top: 1px solid #ddd;
+    background-color: #333;
+}
+
+.filmstrip-scroll {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.filmstrip {
+    display: flex;
+    height: 100%;
+    padding: 5px;
+}
+
+.filmstrip-thumbnail {
+    height: 60px;
+    width: 60px;
+    margin-right: 5px;
+    position: relative;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background-color: #222;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.filmstrip-thumbnail.selected {
+    border-color: #007bff;
+}
+
+.filmstrip-thumbnail:hover {
+    border-color: #aaa;
+}
+
+.filmstrip-thumbnail canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.thumbnail-index {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 2px 5px;
+    font-size: 10px;
+    border-top-left-radius: 3px;
+}
+
+/* File controls wrapper */
+.file-controls-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.patient-info td {
+    padding: 4px 0;
+}
+
+/* Add this to your styles.css */
+.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+/* For better visibility of the status message */
+#status {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+/* Fullscreen mode styles */
+.comparison-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.comparison-container.fullscreen .comparison-toolbar {
+    display: none;
+}
+
+.comparison-container.fullscreen .viewport-container {
+    flex: 1;
+    height: 100%;
+}
+
+/* Fullscreen button in toolbar */
+.fullscreen-button {
+    margin-left: auto;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fullscreen-button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Fullscreen overlay controls */
+.fullscreen-overlay-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 10px;
+    display: none;
+    z-index: 10000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.comparison-container.fullscreen .fullscreen-overlay-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fullscreen-overlay-controls .control-group {
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+
+.fullscreen-overlay-controls .slider-control label {
+    color: white;
+    font-size: 0.8em;
+}
+
+.fullscreen-overlay-controls .compact-slider {
+    width: 80px;
+}
+
+.fullscreen-overlay-controls button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+.fullscreen-overlay-controls button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.exit-fullscreen-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 10001;
+    display: none;
+}
+
+.comparison-container.fullscreen .exit-fullscreen-button {
+    display: block;
+}
+
+/* Best fit button styles */
+.best-fit-option {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.best-fit-option:hover {
+    background-color: #e0e0e0;
+}
+
+/* Fullscreen overlay controls */
+.fullscreen-overlay-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 10px;
+    display: none;
+    z-index: 10000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+/* Add this to your styles.css file to ensure image icons appear correctly */
+
+.tree-file:before {
+    content: '📄 ';
+}
+
+.tree-file.image-file:before {
+    content: '🖼️ ' !important;
+}
+
+/* Make sure the style is strong enough to override any other styles */
+.tree-item.tree-file.image-file:before {
+    content: '🖼️ ' !important;
+}
+
+/* Zoom controls in toolbar */
+.zoom-controls {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.zoom-controls button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.zoom-controls button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Update fullscreen overlay controls */
+.fullscreen-overlay-controls .control-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Remove the best-fit-option styles since we're moving the button */
+.best-fit-option {
+    display: none;
+}
+
+/* Drag and drop styling */
+.highlight-drop {
+    border: 2px dashed #4a90e2 !important;
+    background-color: rgba(74, 144, 226, 0.1) !important;
+}
+
+/* File input styling */
+.file-input-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: normal;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.file-input-label:hover {
+    background-color: #45a049;
+}
+
+#zipFileInput {
+    display: none; /* Hide the actual file input */
+}
